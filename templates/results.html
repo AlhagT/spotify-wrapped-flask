@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head><title>Dina Topplåtar</title></head>
+<body>
+    <h1>Dina topp 10 låtar:</h1>
+    <ul>
+        {% for track in tracks %}
+            <li>{{ track }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

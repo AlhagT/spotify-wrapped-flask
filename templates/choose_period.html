@@ -2,7 +2,7 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <title>Spotify Wrapped Login</title>
+    <title>Välj period för Spotify Wrapped</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,7 +16,13 @@
             margin: 0;
         }
 
-        .login-button {
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .wrapped-button {
             background-color: white;
             color: #191414;
             border: none;
@@ -27,7 +33,7 @@
             transition: 0.3s;
         }
 
-        .login-button:hover {
+        .wrapped-button:hover {
             background-color: #1DB954;
             color: white;
             transform: scale(1.05);
@@ -36,11 +42,19 @@
 </head>
 <body>
 
-<h1>Logga in för att se din Spotify Wrapped</h1>
+<h1>Pick Your Wrapped</h1>
 
-<a href="/login">
-    <button class="login-button">Logga in med Spotify</button>
-</a>
+<div class="button-container">
+    <a href="/wrapped?period=short_term">
+        <button class="wrapped-button">4 Weeks Wrapped</button>
+    </a>
+    <a href="/wrapped?period=medium_term">
+        <button class="wrapped-button">6 Months Wrapped</button>
+    </a>
+    <a href="/wrapped?period=long_term">
+        <button class="wrapped-button">All Time Wrapped</button>
+    </a>
+</div>
 
 </body>
 </html>

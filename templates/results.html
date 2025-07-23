@@ -1,12 +1,128 @@
 <!DOCTYPE html>
-<html>
-<head><title>Dina Topplåtar</title></head>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <title>Gissa dina topp-artister och låtar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: linear-gradient(to bottom right, #1DB954, #191414);
+            color: white;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .section {
+            padding: 30px;
+            max-width: 700px;
+            margin: auto;
+        }
+        .section-tracks {
+            background-color: #1DB954;
+        }
+        .section-artists {
+            background-color: #191414;
+        }
+        ol {
+            font-size: 20px;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .hidden-name {
+            visibility: hidden;
+        }
+        input {
+            font-size: 18px;
+            padding: 12px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 400px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 8px;
+            border: none;
+        }
+    </style>
+</head>
 <body>
-    <h1>Dina topp 10 låtar:</h1>
-    <ul>
-        {% for track in tracks %}
-            <li>{{ track }}</li>
+
+<h1>🎶 Gissa din Spotify Wrapped – {{ period.replace('_', ' ').title() }}</h1>
+
+<div class="section section-tracks">
+    <h2>🎵 Gissa låtar</h2>
+    <input type="text" id="track-input" placeholder="Skriv exakt låt – artist">
+    <ol id="track-list">
+        {% for t in tracks %}
+            <li>
+                <span class="hidden-name">{{ t.full }}</span>
+                <span class="track-name" style="display: none;">{{ t.track }}</span>
+            </li>
         {% endfor %}
-    </ul>
+    </ol>
+    
+</div>
+
+<div class="section section-artists">
+    <h2>⭐ Gissa artister</h2>
+    <input type="text" id="artist-input" placeholder="Skriv exakt artist">
+    <ol id="artist-list">
+        {% for artist in artists %}
+            <li>
+                <span class="hidden-name">{{ artist }}</span>
+                <span class="artist-name" style="display: none;">{{ artist }}</span>
+            </li>
+        {% endfor %}
+    </ol>
+    
+    
+</div>
+
+<script>
+    const normalize = text => text.toLowerCase().trim();
+    
+    // Låtar
+    const trackInput = document.getElementById('track-input');
+    const trackItems = document.querySelectorAll('#track-list li');
+    
+    trackInput.addEventListener('input', function() {
+        const guess = normalize(this.value);
+        let correct = false;
+        trackItems.forEach(item => {
+            const hidden = item.querySelector('.hidden-name');
+            const trackName = normalize(item.querySelector('.track-name').textContent);
+            if (guess === trackName && hidden.style.visibility !== 'visible') {
+                hidden.style.visibility = 'visible';
+                correct = true;
+            }
+        });
+        if (correct) this.value = '';
+    });
+    
+    // Artister
+    const artistInput = document.getElementById('artist-input');
+    const artistItems = document.querySelectorAll('#artist-list li');
+    
+    artistInput.addEventListener('input', function() {
+        const guess = normalize(this.value);
+        let correct = false;
+        artistItems.forEach(item => {
+            const hidden = item.querySelector('.hidden-name');
+            const artistName = normalize(item.querySelector('.artist-name').textContent);
+            if (guess === artistName && hidden.style.visibility !== 'visible') {
+                hidden.style.visibility = 'visible';
+                correct = true;
+            }
+        });
+        if (correct) this.value = '';
+    });
+</script>
+    
+    
+
 </body>
 </html>

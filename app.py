@@ -6,7 +6,7 @@ app.secret_key = 'något-hemligt'
 
 CLIENT_ID = '1a01972cabac4f309c2f1968b05d908e'
 CLIENT_SECRET = '11728f25c7994139bd8ac76f6eaa22ce'
-REDIRECT_URI = 'https://21a08ea3f81f.ngrok-free.app/callback'
+REDIRECT_URI = 'https://spotify-wrapped-flask.onrender.com'
 SCOPE = 'user-top-read'
 
 @app.route('/')

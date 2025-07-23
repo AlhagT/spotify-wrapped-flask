@@ -29,7 +29,7 @@ def login():
 def callback():
     code = request.args.get('code')
 
-    token_response = requests.post(
+    response = requests.post(
         'https://accounts.spotify.com/api/token',
         data={
             'grant_type': 'authorization_code',
@@ -39,14 +39,20 @@ def callback():
             'client_secret': CLIENT_SECRET
         },
         headers={'Content-Type': 'application/x-www-form-urlencoded'}
-    ).json()
+    )
+
+    try:
+        token_response = response.json()
+    except ValueError:
+        return f"Fel vid JSON-avkodning från Spotify: {response.text}", 500
 
     access_token = token_response.get('access_token')
     if not access_token:
-        return "Fel vid inloggning!"
+        return f"Fel vid inloggning: {token_response}", 400
 
     session['access_token'] = access_token
     return redirect('/choose-period')
+
 
 
 @app.route('/choose-period')
@@ -97,3 +103,4 @@ def wrapped():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8080)
+
